@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">YOUR MODEL</div><h1>Digital Twin Profile</h1><p class="muted">An evolving computational representation of observable behavior.</p></div><span class="status-pill">● Twin Active</span></header>
+<section class="panel twin-hero"><div class="twin-avatar"><div class="orb">✦</div></div><div class="twin-main"><h2>Your Digital Twin</h2><p class="muted">Continuously updated from recent interaction evidence.</p>
+<div class="trait-grid">
+<div><span>Learning style</span><b>{{profile.learning_style}}</b></div><div><span>Focus pattern</span><b>{{profile.focus_pattern}}</b></div><div><span>Top activity</span><b>{{profile.top_task}}</b></div><div><span>Adaptability</span><b>{{(profile.adaptability*100)|round|int}}%</b></div><div><span>Consistency</span><b>{{(profile.consistency*100)|round|int}}%</b></div><div><span>Focus window</span><b>{{profile.focus_window}}</b></div>
+</div></div></section>
+<section class="grid-2"><div class="panel"><div class="panel-head"><div><h2>Explainable Twin</h2><p class="muted">Factors influencing current predictions</p></div></div>
+{% for name,val,weight in factors %}<div class="factor"><div><b>{{name}}</b><span>{{weight}}</span></div><div class="factor-bar"><i style="width:{{val*100}}%"></i></div></div>{% endfor %}
+<div class="notice">Predictions use observable application behavior, not inferred sensitive attributes.</div></div>
+<div class="panel"><div class="panel-head"><div><h2>Long-term AI Memory</h2><p class="muted">Structured evidence used for personalization</p></div></div>
+{% for m in memories[:7] %}<div class="memory"><span>{{m.memory_type|upper}}</span><p>{{m.content}}</p><small>Confidence {{(m.confidence*100)|round|int}}%</small></div>{% endfor %}</div></section>{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">PERSONAL INTELLIGENCE</div><h1>Good morning, {{username}} <span class="sun">✦</span></h1><p class="muted">Here's what your digital twin understands about you today.</p></div><div class="accuracy"><span>Twin Confidence</span><b>{{(confidence*100)|round|int}}%</b></div></header>
+<section class="metric-grid">
+<div class="metric"><div class="metric-title">Behavioral Confidence</div><div class="metric-value">{{(profile.behavioral_confidence*100)|round|int}}%</div><div class="spark"></div><small class="{{'good' if profile.behavioral_confidence >= 0.5 else ''}}">{{'High confidence' if profile.behavioral_confidence >= 0.5 else 'Building from new evidence'}}</small></div>
+<div class="metric"><div class="metric-title">Goal Progress</div><div class="metric-value">{{(risks[0].progress*100)|round|int if risks else 0}}%</div><div class="progress"><i style="width:{{(risks[0].progress*100)|round|int if risks else 0}}%"></i></div><small class="{{'good' if risks else ''}}">{{'On track' if risks else 'No goals yet'}}</small></div>
+<div class="metric"><div class="metric-title">Consistency Score</div><div class="metric-value">{{(profile.consistency*100)|round|int}}<em>/100</em></div><div class="spark purple"></div><small>{{'Adaptive' if profile.behavioral_confidence >= 0.5 else 'Early model'}}</small></div>
+<div class="metric"><div class="metric-title">Focus Window</div><div class="metric-value small-value">{{profile.focus_window}}</div><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i></div><small>{{'Best observed period' if profile.focus_window != 'Discovering your best window' else 'Waiting for activity'}}</small></div>
+<div class="metric"><div class="metric-title">Predicted Task</div><div class="metric-value small-value">{{pred[0].label}}</div><small>{{pred[0].prob}}% probability</small></div>
+</section>
+<section class="grid-2">
+<div class="panel large-panel"><div class="panel-head"><div><h2>Today's Predicted Pattern</h2><p class="muted">Based on recent behavioral evidence</p></div><span class="live">● LIVE</span></div>
+<div class="focus-card"><div class="clock">08–11</div><div><b>{{'Deep-focus window' if profile.focus_window != 'Discovering your best window' else 'Your twin is learning'}}</b><p class="muted">{{'Recent completion rate is strongest in ' ~ profile.focus_window ~ '.' if profile.focus_window != 'Discovering your best window' else 'Complete activities in LifeTwin AI to build personalized behavioral evidence.'}}</p></div><a class="ghost" href="{{url_for('main.whatif')}}">Explore →</a></div>
+<div class="insight"><span>✦</span><div><b>Twin Insight</b><p>You tend to perform deep work more consistently when task switching stays low. Your current model favors {{profile.top_task.lower()}} sessions.</p></div></div></div>
+<div class="panel"><div class="panel-head"><h2>Areas to improve</h2></div>
+<div class="list-item"><span class="dot red"></span><div><b>Task switching</b><small>Recent average: {{profile.avg_switches|round(1)}}</small></div><strong>High</strong></div>
+<div class="list-item"><span class="dot amber"></span><div><b>Long-task planning</b><small>Large tasks show higher postponement</small></div><strong>Medium</strong></div>
+<div class="list-item"><span class="dot green"></span><div><b>Adaptability</b><small>Recent improvement detected</small></div><strong class="good">High</strong></div></div>
+</section>
+<section class="grid-2">
+<div class="panel"><div class="panel-head"><div><h2>Goal Progress</h2><p class="muted">Current trajectories</p></div><a class="link" href="{{url_for('main.goals_page')}}">View all</a></div>
+{% for r in risks[:3] %}<div class="goal-row"><div><b>{{r.goal}}</b><small>{{r.label}} goal risk</small></div><div class="goal-bar"><i style="width:{{r.progress*100}}%"></i></div><strong>{{(r.progress*100)|round|int}}%</strong></div>{% endfor %}
+</div>
+<div class="panel"><div class="panel-head"><div><h2>Model health</h2><p class="muted">How well the twin represents recent behavior</p></div></div>
+<div class="health"><div class="health-ring"><span>{{(profile.behavioral_confidence*100)|round|int}}%</span></div><div><b>{{'Healthy twin representation' if profile.behavioral_confidence >= 0.5 else 'Twin initialization in progress'}}</b><p class="muted">{{'Enough recent evidence is available for personalized signals.' if profile.behavioral_confidence >= 0.5 else 'Your account is ready. The model will become more personalized as activity is recorded.'}}</p><a class="link" href="{{url_for('main.analytics_page')}}">Open analytics →</a></div></div>
+<div class="notice">⚠ {{drift.status}}{% if drift.score %} · signal {{(drift.score*100)|round|int}}%{% endif %}</div></div>
+</section>{% endblock %}

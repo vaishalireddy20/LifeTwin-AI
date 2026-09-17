@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">FORECAST ENGINE</div><h1>Behavior Predictions</h1><p class="muted">Predicting likely next behavior from recent interaction patterns.</p></div></header>
+<section class="grid-2"><div class="panel"><div class="panel-head"><h2>Next-task probability</h2><span class="confidence">{{(confidence*100)|round|int}}% confidence</span></div>
+{% for x in pred %}<div class="prob-row"><div><b>{{x.label}}</b><span>{{x.prob}}%</span></div><div class="prob-bar"><i style="width:{{x.prob}}%"></i></div></div>{% endfor %}
+<div class="notice">The model can express uncertainty; this is not a guaranteed forecast.</div></div>
+<div class="panel"><div class="panel-head"><h2>Twin vs User</h2><span class="live">EVALUATION</span></div>
+<form method="post" action="{{url_for('main.feedback')}}" class="form"><input type="hidden" name="prediction_id" value="{{prediction_id}}">
+<label>What did you actually choose?<select name="actual"><option>Deep Work</option><option>Learning</option><option>Project</option><option>Admin</option><option>Revision</option></select></label>
+<label>Why was the prediction right or wrong?<textarea name="feedback" placeholder="Optional context..."></textarea></label><button class="primary">Update Twin Evidence →</button></form></div></section>
+<section class="panel"><div class="panel-head"><h2>Recent prediction log</h2></div><div class="table"><div class="tr th"><span>Predicted</span><span>Confidence</span><span>Actual</span><span>Outcome</span></div>
+{% for x in actuals %}<div class="tr"><span>{{x.predicted}}</span><span>{{(x.confidence*100)|round|int}}%</span><span>{{x.actual or 'Pending'}}</span><span>{{'Matched' if x.actual==x.predicted else ('Reviewed' if x.actual else 'Open')}}</span></div>{% endfor %}</div></section>{% endblock %}

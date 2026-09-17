@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">GOAL INTELLIGENCE</div><h1>Goals & Risk</h1><p class="muted">Track progress and identify early signs of goal delay.</p></div></header>
+<section class="grid-2">{% for g in goals %}<div class="panel goal-card"><div class="panel-head"><div><span class="eyebrow">ACTIVE GOAL</span><h2>{{g.title}}</h2></div><span class="status-pill">{{g.status}}</span></div>
+<div class="big-progress"><i style="width:{{g.progress*100}}%"></i></div><div class="goal-meta"><span>{{g.progress*100|round|int}}% complete</span><span>Target {{g.target_date}}</span></div>
+{% for r in risks if r.goal==g.title %}<div class="risk {{r.label|lower}}"><b>{{r.label}} risk</b><span>{{r.risk*100|round|int}}%</span></div>{% endfor %}</div>{% endfor %}</section>{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">FUTURE LAB</div><h1>What-if Simulator</h1><p class="muted">Explore alternative behavioral trajectories without treating them as guarantees.</p></div></header>
+<section class="grid-2"><div class="panel"><div class="panel-head"><h2>Scenario controls</h2><span class="status-pill">SIMULATION</span></div>
+<form method="post" class="form">
+<label>Study / focused work per day <div class="range-line"><input type="range" name="study_hours" min=".5" max="4" step=".5" value="{{values.study_hours}}" oninput="rangeVal(this,'studyValue',' h')"><output id="studyValue">{{values.study_hours}} h</output></div></label>
+<label>Sleep <div class="range-line"><input type="range" name="sleep" min="4" max="9" step=".5" value="{{values.sleep}}" oninput="rangeVal(this,'sleepValue',' h')"><output id="sleepValue">{{values.sleep}} h</output></div></label>
+<label>Exercise sessions/week <div class="range-line"><input type="range" name="exercise" min="0" max="7" step="1" value="{{values.exercise}}" oninput="rangeVal(this,'exerciseValue','')"><output id="exerciseValue">{{values.exercise}}</output></div></label>
+<label>Task switches/day <div class="range-line"><input type="range" name="switches" min="0" max="10" step=".5" value="{{values.switches}}" oninput="rangeVal(this,'switchValue','')"><output id="switchValue">{{values.switches}}</output></div></label>
+<button class="primary wide">Simulate Future →</button></form></div>
+<div class="panel"><div class="panel-head"><div><h2>Projected trajectory</h2><p class="muted">Model-based scenario comparison</p></div></div>
+{% if result %}<div class="scenario-score"><span>Projected quality</span><b>{{result.scenario}}%</b><em class="{{'good' if result.delta>=0 else 'bad'}}">{{'+' if result.delta>=0 else ''}}{{result.delta}} pts</em></div>
+<div class="compare"><div><span>Current behavior</span><b>{{result.current}}%</b></div><div class="arrow">→</div><div><span>Scenario</span><b>{{result.scenario}}%</b></div></div>
+<div class="confidence-box">Confidence {{(result.confidence*100)|round|int}}% · Best observed focus window: {{result.focus_window}}</div>
+{% else %}<div class="empty-state"><div>◌</div><h3>Build a future scenario</h3><p>Adjust the controls and simulate a different behavioral pattern.</p></div>{% endif %}</div></section>{% endblock %}

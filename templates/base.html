@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{title or "LifeTwin AI"}}</title>
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+</head><body>
+<div class="app-shell">
+<aside class="sidebar">
+<div class="brand"><div class="brand-mark">✦</div><div><strong>LifeTwin AI</strong><span>Personal Digital Twin</span></div></div>
+{% if session.get('uid') %}
+<nav>
+<a href="{{url_for('main.dashboard')}}" class="{{'active' if request.endpoint=='main.dashboard' else ''}}">◈ <span>Dashboard</span></a>
+<a href="{{url_for('main.twin')}}" class="{{'active' if request.endpoint=='main.twin' else ''}}">◉ <span>Twin Profile</span></a>
+<a href="{{url_for('main.predictions')}}" class="{{'active' if request.endpoint=='main.predictions' else ''}}">⌁ <span>Predictions</span></a>
+<a href="{{url_for('main.whatif')}}" class="{{'active' if request.endpoint=='main.whatif' else ''}}">◌ <span>What-if Simulator</span></a>
+<a href="{{url_for('main.decision')}}" class="{{'active' if request.endpoint=='main.decision' else ''}}">◇ <span>Decision Simulator</span></a>
+<a href="{{url_for('main.goals_page')}}" class="{{'active' if request.endpoint=='main.goals_page' else ''}}">◎ <span>Goals</span></a>
+<a href="{{url_for('main.knowledge')}}" class="{{'active' if request.endpoint=='main.knowledge' else ''}}">⌘ <span>Knowledge Map</span></a>
+<a href="{{url_for('main.timeline_page')}}" class="{{'active' if request.endpoint=='main.timeline_page' else ''}}">◫ <span>Behavior Timeline</span></a>
+<a href="{{url_for('main.analytics_page')}}" class="{{'active' if request.endpoint=='main.analytics_page' else ''}}">▥ <span>Analytics</span></a>
+</nav>
+<div class="sidebar-bottom"><div class="user-mini"><div class="avatar">V</div><div><b>{{username}}</b><span>Digital Twin active</span></div><i></i></div><a class="logout" href="{{url_for('main.logout')}}">↪ <span>Sign out</span></a></div>
+{% endif %}
+</aside>
+<main class="main">
+{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}<div class="toast {{c}}">{{m}}</div>{% endfor %}{% endwith %}
+{% block content %}{% endblock %}
+</main></div>
+<script src="{{url_for('static',filename='js/app.js')}}"></script></body></html>

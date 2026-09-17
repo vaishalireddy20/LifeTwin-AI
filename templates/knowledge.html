@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">KNOWLEDGE INTELLIGENCE</div><h1>Personal Knowledge Map</h1><p class="muted">A graph representation of skills and prerequisite relationships.</p></div></header>
+<section class="panel graph-panel"><div id="graph" class="graph"></div><div class="graph-legend"><span><i class="dot cyan"></i> Skill / concept</span><span><i class="dot violet"></i> Prerequisite relationship</span></div></section>
+<script>const nodes={{nodes|tojson}};const el=document.getElementById('graph');nodes.forEach((n,i)=>{const d=document.createElement('div');d.className='graph-node';d.style.left=(7+(i%4)*24)+'%';d.style.top=(10+Math.floor(i/4)*30)+'%';d.innerHTML='<b>'+n.id+'</b><span>concept</span>';el.appendChild(d);});</script>
+{% endblock %}

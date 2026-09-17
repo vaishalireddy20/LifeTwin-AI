@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% block content %}
+<div class="login-page">
+  <div class="login-card register-card">
+    <div class="brand large">
+      <div class="brand-mark">✦</div>
+      <div><strong>LifeTwin AI</strong><span>Adaptive Personal Digital Twin</span></div>
+    </div>
+
+    <div class="eyebrow">CREATE YOUR DIGITAL TWIN</div>
+    <h1>Start your LifeTwin.</h1>
+    <p class="muted">Create a secure account and build your personalized behavioral intelligence workspace.</p>
+
+    <div class="account-benefits">
+      <div><span>✦</span><div><b>Personalized</b><small>Your twin is linked to your account.</small></div></div>
+      <div><span>⌁</span><div><b>Adaptive</b><small>Behavioral evidence improves the model over time.</small></div></div>
+      <div><span>◇</span><div><b>Private by design</b><small>Your dashboard is separated by user account.</small></div></div>
+    </div>
+
+    <form method="post" class="form">
+      <label>Username
+        <input name="username" autocomplete="username" placeholder="Choose a username" minlength="3" required>
+      </label>
+      <label>Password
+        <input name="password" type="password" autocomplete="new-password" placeholder="At least 6 characters" minlength="6" required>
+      </label>
+      <label>Confirm password
+        <input name="confirm_password" type="password" autocomplete="new-password" placeholder="Re-enter your password" minlength="6" required>
+      </label>
+      <button class="primary wide" type="submit">Create Account & Enter LifeTwin →</button>
+    </form>
+
+    <div class="auth-switch">Already have an account? <a href="{{url_for('main.login')}}">Sign in</a></div>
+    <div class="demo-note">Your account starts with a clean behavioral profile. The twin learns from evidence you provide.</div>
+  </div>
+</div>
+{% endblock %}

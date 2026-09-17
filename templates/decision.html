@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}
+<header class="topbar"><div><div class="eyebrow">DECISION INTELLIGENCE</div><h1>Decision Simulator</h1><p class="muted">Compare choices against learned behavioral preferences.</p></div></header>
+<section class="panel"><form method="post" class="decision-form"><label>Option A<input name="option_a" value="{{a}}" required></label><div class="vs">VS</div><label>Option B<input name="option_b" value="{{b}}" required></label><button class="primary">Simulate Choice →</button></form></section>
+{% if result %}<section class="grid-3"><div class="option-card"><span>OPTION A</span><h2>{{a}}</h2><div class="big-score">{{result.a}}%</div><small>Predicted acceptance</small>{% for r,w in result.ra %}<div class="reason"><span>{{r}}</span><b>{{'+' if w>=0 else ''}}{{w}}</b></div>{% endfor %}</div>
+<div class="decision-center"><div class="ring">{{result.confidence*100|round|int}}%</div><b>Twin confidence</b><small>Based on learned preferences</small><div class="versus">A <strong>VS</strong> B</div></div>
+<div class="option-card alt"><span>OPTION B</span><h2>{{b}}</h2><div class="big-score">{{result.b}}%</div><small>Predicted acceptance</small>{% for r,w in result.rb %}<div class="reason"><span>{{r}}</span><b>{{'+' if w>=0 else ''}}{{w}}</b></div>{% endfor %}</div></section>
+<div class="notice">This is a behavioral simulation, not financial, career, medical or legal advice.</div>{% endif %}{% endblock %}

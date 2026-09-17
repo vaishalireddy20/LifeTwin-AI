@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<div class="login-page"><div class="login-card">
+<div class="brand large"><div class="brand-mark">✦</div><div><strong>LifeTwin AI</strong><span>Adaptive Personal Digital Twin</span></div></div>
+<div class="eyebrow">INTELLIGENT PERSONALIZATION</div><h1>Meet your digital twin.</h1>
+<p class="muted">A behavioral intelligence workspace that learns from observable activity, explains predictions and simulates alternative futures.</p>
+<form method="post" class="form"><label>Username<input name="username" autocomplete="username" placeholder="Enter your username" required></label><label>Password<input name="password" type="password"  required></label><button class="primary wide" type="submit">Sign in to LifeTwin →</button></form>
+<div class="auth-divider"><span>NEW TO LIFETWIN?</span></div>
+<a class="secondary wide account-button" href="{{url_for('main.register')}}">Create a new account <span>→</span></a>
+<div class="auth-switch">Already have an account? Sign in above.</div><div class="demo-note">Demo account: <b>demo</b> / <b>demo123</b></div>
+</div></div>{% endblock %}
